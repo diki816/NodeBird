@@ -1,17 +1,24 @@
 import { HYDRATE } from 'next-redux-wrapper';
+import { combineReducers } from 'redux';
+import user from './user';
+import post from './post';
 
 const initialState = {
+    /* move to user.js
     user: {
         isLoggedIn: false,
         user: null,
         signUpData: {},
         loginData: {},
     },
-    post: {
+    */
+    /* move to post.js
+   post: {
         mainPosts: [],
     },
+    */
 };
-
+/* move to user.js
 export const loginAction = (data) => {
     return {
         type: 'LOG_IN',
@@ -23,13 +30,16 @@ export const logoutAction = () => {
         type: 'LOG_OUT',
     };
 };
+*/
 
-const rootReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case HYDRATE:
-            console.log('HYDRATE', action);
-            return {...state, ...action.payload };
-
+const rootReducer = combineReducers({
+//const rootReducer = (state = initialState, action) => {    
+    index: (state = {}, action) => {
+        switch (action.type) {
+            case HYDRATE:
+                console.log('HYDRATE', action);
+                return {...state, ...action.payload };
+/* move to user.js
         case 'LOG_IN':
             return {
                 ...state,
@@ -48,12 +58,17 @@ const rootReducer = (state = initialState, action) => {
                     user: null,
                 },
             };
-        
-        default:
-            return state;
-    }
-}
+*/        
+            default:
+                return state;
+        }
+    }, 
+    user,
+    post,
+});
 
+
+export default rootReducer;
 /* 설명용
 const initialState =- {
     name: 'zerocho',
