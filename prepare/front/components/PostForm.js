@@ -13,6 +13,7 @@ const PostForm = () => {
     }, []);
     const onSubmit = useCallback(() => {
         dispatch(addPost);
+        setText('');
     }, []);
     const onClickImageUpload = useCallback(() => {
         imageInput.current.click();
