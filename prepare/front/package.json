@@ -17,6 +17,10 @@
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.1",
         "redux": "^4.0.5",
+<<<<<<< HEAD
+=======
+        "redux-devtools-extension": "^2.13.8",
+>>>>>>> 31f11a1593a0a7b4556cb798fe197b8fed24dce7
         "styled-components": "^5.1.1"
     }
 }
