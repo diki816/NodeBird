@@ -2,12 +2,16 @@ import React, {useState, useCallback, useMemo} from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers';
 
 const ButtonWraaper = styled.div `
     margin-top: 10px;
 `;
 
-const LoginForm = ( {setIsLoggedIn} ) => {
+// const LoginForm = ( {setIsLoggedIn} ) => {
+const LoginForm = () => {
+    const dispatch = useDispatch();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
@@ -21,7 +25,8 @@ const LoginForm = ( {setIsLoggedIn} ) => {
 
     const onSubmitForm = useCallback( () => {
         console.log(id, password);
-        setIsLoggedIn(true);
+        //setIsLoggedIn(true);
+        dispatch(loginAction( {id, password}));
     }, [id, password])
     {/* anothet for preventing object refreshing using 'useMemo()'*/}
     const style = useMemo(() => ({ marginTop: 10}), []);
