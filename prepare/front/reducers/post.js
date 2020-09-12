@@ -55,7 +55,9 @@ const reducer = (state = initialState, action) => {
                 postAdded: true,
             };
         default:
-            return state;
+            return {
+                ...state,
+            };
     }
 };
 
