@@ -1,17 +1,24 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import { PlusOutlined } from '@ant-design/icons';
+import ImagesZoom from './imagesZoom';
 
-const PostImages = ({ Iamges }) => {
+const PostImages = ({ images }) => {
     const [showImagesZoom, setShowImagesZoom] = useState(this);
 
     const onZoom = useCallback(() => {
         setShowImagesZoom(true);
     }, []);
 
+    const onClose = useCallback(() => {
+        setShowImagesZoom(false);
+    }, []);
+
     if (images.length == 1) {
         return (
             <>
                 <img role="presentation" src={images[0].src} alt={images[0].src} onClick={onZoom} />
+                {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
             </>
         );    
     }
@@ -20,6 +27,7 @@ const PostImages = ({ Iamges }) => {
             <>
                 <img role="presentation" style={{display: 'inline-block', width: "50%"}} src={images[0].src} alt={images[0].src} onClick={onZoom} />
                 <img role="presentation" style={{display: 'inline-block', width: "50%"}} src={images[1].src} alt={images[1].src} onClick={onZoom} />
+                {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
             </>
         );    
     }
@@ -34,6 +42,7 @@ const PostImages = ({ Iamges }) => {
             <br/>
             {images.length - 1}
             개의 사진 더 보기
+            {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
             </div>
         </>
     );
