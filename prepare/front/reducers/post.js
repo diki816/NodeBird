@@ -1,39 +1,57 @@
 export const initialState = {
     mainPosts: [{
-        //대소문자 의미가 있음: 소문자는 싱글, 대문자는 복합
         id: 1,
         User: {
-            id: 1,
-            nickname: '제로초',
+          id: 1,
+          nickname: '제로초',
         },
-        content: '첫 번째 게시글 #해스태그 #익스프레스',
-        Images: [ {
-            src: 'http://asp1.iquick4u.com/iquick/KSD/pimg/m_01.gif'
+        content: '첫 번째 게시글',
+        Images: [{
+          src: 'https://bookthumb-phinf.pstatic.net/cover/137/995/13799585.jpg?udate=20180726',
         }, {
-            src: 'http://asp1.iquick4u.com/iquick/KSD/pimg/m_999.gif'
+          src: 'https://gimg.gilbut.co.kr/book/BN001958/rn_view_BN001958.jpg',
         }, {
-            src: 'http://asp1.iquick4u.com/iquick/KSD/pimg/m_12.gif'
+          src: 'https://gimg.gilbut.co.kr/book/BN001998/rn_view_BN001998.jpg',
         }],
         Comments: [{
-            User: {
-                nickname: 'nero',
-            },
-            contetn: '우와 개정판이 나왔다!',
+          User: {
+            nickname: 'nero',
+          },
+          content: '우와 개정판이 나왔군요~',
         }, {
-            User: {
-                nickname: 'hero',
-            },
-            contetn: '히히 나도나도',
-        },]
+          User: {
+            nickname: 'hero',
+          },
+          content: '얼른 사고싶어요~',
+        }]
     }],
     imagePaths: [],
-    postAdded: false,
+    addPostLoading: false,
+    addPostDone: false,
+    addPostError: null,
+    addCommentLoading: false,
+    addCommentDone: false,
+    addCommentError: null,
 }
 
-const ADD_POST = 'ADD_POST';
-export const addPost = {
-    type: ADD_POST,
-};
+const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+export const addPost = (data) => ({
+    type: ADD_POST_REQUEST,
+    data,
+});
+
+
+export const addComment = (data) => ({
+    type: ADD_COMMENT_REQUEST,
+    data,
+});
 
 const dummyPost = {
     id: 2,
@@ -48,12 +66,49 @@ const dummyPost = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:
+        case ADD_POST_REQUEST:
+            return {
+                ...state,
+                addPostLoading: true,
+                addPostDone: false,
+                addPostError: null,
+            };
+        case ADD_POST_SUCCESS:
             return {
                 ...state,
                 mainPosts: [dummyPost, ...state.mainPosts],
-                postAdded: true,
+                addPostLoading: false,
+                addPostDone: true,
             };
+
+        case ADD_POST_FAILURE:
+            return {
+                ...state,
+                addPostLoading: false,
+                addPostError: action.error,
+            };
+        case ADD_COMMENT_REQUEST:
+            return {
+                ...state,
+                addPostLoading: true,
+                addPostDone: false,
+                addPostError: null,
+            };
+        case ADD_COMMENT_SUCCESS:
+            return {
+                ...state,
+                mainPosts: [dummyPost, ...state.mainPosts],
+                addPostLoading: false,
+                addPostDone: true,
+            };
+
+        case ADD_COMMENT_FAILURE:
+            return {
+                ...state,
+                addPostLoading: false,
+                addPostError: action.error,
+            };
+    
         default:
             return state;
     }

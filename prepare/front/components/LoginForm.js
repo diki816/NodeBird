@@ -2,8 +2,8 @@ import React, {useState, useCallback, useMemo} from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
-import {useDispatch} from 'react-redux';
-import {loginAction} from '../reducers/user';
+import {useDispatch, useSelector} from 'react-redux';
+import {loginRequestAction} from '../reducers/user';
 
 const ButtonWraaper = styled.div `
     margin-top: 10px;
@@ -13,6 +13,7 @@ const ButtonWraaper = styled.div `
 const LoginForm = () => {
 
     const dispatch = useDispatch();
+    const { isLoggingIn } = useSelector((state) => state.user)
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
@@ -27,7 +28,7 @@ const LoginForm = () => {
     const onSubmitForm = useCallback( () => {
         console.log(id, password);
         //setIsLoggedIn(true);
-        dispatch(loginAction());
+        dispatch(loginRequestAction({id, password}));
     }, [id, password])
     {/* anothet for preventing object refreshing using 'useMemo()'*/}
     const style = useMemo(() => ({ marginTop: 10}), []);
@@ -61,7 +62,7 @@ const LoginForm = () => {
             */}
             
             <ButtonWraaper>
-                <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
+                <Button type="primary" htmlType="submit" loading={isLoggingIn}>로그인</Button>
                 <Link href="/signup"><a><Button>Register</Button></a></Link>
             </ButtonWraaper>
         </FormWrapper>
