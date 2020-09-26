@@ -2,8 +2,8 @@ import React, {useState, useCallback, useMemo} from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { loginAction } from '../reducers/user';
+import {useDispatch, useSelector, useInput} from 'react-redux';
+import {loginRequestAction} from '../reducers/user';
 
 const ButtonWraaper = styled.div `
     margin-top: 10px;
@@ -13,8 +13,10 @@ const ButtonWraaper = styled.div `
 const LoginForm = () => {
 
     const dispatch = useDispatch();
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
+    //const { isLoggingIn } = useSelector((state) => state.user)
+    const { logInLoading } = useSelector((state) => state.user)
+    const [id, setId] = useInput('');
+    const [password, setPassword] = useInput('');
 
     const onChangeId = useCallback( (e) => {
         setId(e.target.value);
@@ -25,10 +27,10 @@ const LoginForm = () => {
     }, []);
 
     const onSubmitForm = useCallback( () => {
-        console.log(id, password);
+        console.log(email, password);
         //setIsLoggedIn(true);
-        dispatch(loginAction( {id, password}));
-    }, [id, password])
+        dispatch(loginRequestAction({email, password}));
+    }, [email, password])
     {/* anothet for preventing object refreshing using 'useMemo()'*/}
     const style = useMemo(() => ({ marginTop: 10}), []);
 
@@ -39,9 +41,9 @@ const LoginForm = () => {
     return (
         <FormWrapper onFinish={onSubmitForm}>
             <div>
-                <label htmlFor="user-id">ID</label>
+                <label htmlFor="user-email">e-mail</label>
                 <br/>
-                <Input name="user-id" value={id} onChange={onChangeId} required/>
+                <Input name="user-email" value={email} onChange={onChangeEmail} required/>
 
             </div>
 
@@ -61,7 +63,7 @@ const LoginForm = () => {
             */}
             
             <ButtonWraaper>
-                <Button type="primary" htmlType="submit" loading={false}>로그인</Button>
+                <Button type="primary" htmlType="submit" loading={logInLoading}>로그인</Button>
                 <Link href="/signup"><a><Button>Register</Button></a></Link>
             </ButtonWraaper>
         </FormWrapper>
