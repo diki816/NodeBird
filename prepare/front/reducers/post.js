@@ -65,15 +65,23 @@ export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
 export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
 export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 
+export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
+export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
+export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+
 export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
 export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
 export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
 
-export const addPost = (data) => ({
+export const addPost = (action) => ({
     type: ADD_POST_REQUEST,
     data,
 });
 
+export const removePost = (action) => ({
+    type: REMOVE_POST_REQUEST,
+    data,
+});
 
 export const addComment = (data) => ({
     type: ADD_COMMENT_REQUEST,
@@ -81,8 +89,8 @@ export const addComment = (data) => ({
 });
 
 const dummyPost = (data) => ({
-    id: shortId.generate(),
-    content: data,
+    id: data.id,
+    content: data.content,
     User: {
         id: 1,
         nickname: 'zerocho',
@@ -107,13 +115,34 @@ const reducer = (state = initialState, action) => {
           addPostLoading: false,
           addPostDone: true,
         };
-
       case ADD_POST_FAILURE:
         return {
           ...state,
           addPostLoading: false,
           addPostError: action.error,
         };
+
+      case REMOVE_POST_REQUEST:
+        return {
+          ...state,
+          removePostLoading: true,
+          removePostDone: false,
+          removePostError: null,
+        };
+      case REMOVE_POST_SUCCESS:
+        return {
+          ...state,
+          mainPosts: state.mainPosts.filter((v) => v.id !== action.id),
+          removePostLoading: false,
+          removePostDone: true,
+        };      
+      case REMOVE_POST_FAILURE:
+        return {
+          ...state,
+          removePostLoading: false,
+          removePostError: action.error,
+        };
+      
       case ADD_COMMENT_REQUEST:
         return {
           ...state,
