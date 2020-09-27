@@ -7,11 +7,11 @@ import PostCard from '../components/PostCard';
 //const { default: AppLayout } = require("../components/AppLayout")
 
 const Home = () => {
-    const { isLoggedIn } = useSelector((state) => state.user);
+    const { me } = useSelector((state) => state.user);
     const { mainPosts } = useSelector((state) => state.post);
     return (
         <AppLayout>
-            {isLoggedIn && <PostForm/>}
+            {me && <PostForm/>}
             {/* index는 키로 사용하면 안된다. anti-pattern */}
             {mainPosts.map((c) => {
                 return (<PostCard key={c.id} post={c} />);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 
 import LoginForm from '../components/LoginForm';
 import UserProfile from '../components/UserProfile';
@@ -17,7 +17,7 @@ const AppLayout = ( {children} ) => {
     // replace with redux
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
     //const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
-    const me = useSelect((state) => state.user)
+    const me = useSelector((state) => state.user);
 
     return (
         <div>

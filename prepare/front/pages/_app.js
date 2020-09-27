@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
 
-const NordBird = ({ Component }) => {
+const NodeBird = ({ Component }) => {
     return (
         <>
             <Head>
@@ -15,9 +15,9 @@ const NordBird = ({ Component }) => {
     )
 }
 
-NordBird.propTypes = {
-    Component: PropTypes.elementType.isRequired,
-}
+NodeBird.propTypes = {
+  Component: PropTypes.elementType.isRequired,
+};
 
 //export default NordBird;
-export default wrapper.withRedux(NordBird);
+export default wrapper.withRedux(NodeBird);

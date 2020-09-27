@@ -51,20 +51,67 @@ const Signup = () => {
         })
     }, [meail, password, passowrdCheck, term]);
 
-    return ( 
-        <AppLayout>
-            <head>
-                <title> Signup </title>    
-            </head>
-            <Form onFinish={onSubmit}>
-                <div>
-                    <label htmlFor='email'>Email</label>
-                    <br/>
-                    <Input name='email' value ={email} required onChange={onChangeEmail} />
-
-                </div>
-            </Form>
-        </AppLayout>
+    return (
+      <AppLayout>
+        <head>
+          <title> Signup </title>
+        </head>
+        <Form onFinish={onSubmit}>
+          <div>
+            <label htmlFor="email">Email</label>
+            <br />
+            <Input
+              name="email"
+              type="email"
+              value={email}
+              required
+              onChange={onChangeEmail}
+            />
+          </div>
+          <div>
+            <label htmlFor="user-nick">nicknmae</label>
+            <br />
+            <Input
+              name="user-nick"
+              value={nickname}
+              required
+              onChange={onChangeNickname}
+            />
+          </div>
+          <div>
+            <label htmlFor="user-password">password</label>
+            <br />
+            <Input
+              name="user-password"
+              type="password"
+              value={password}
+              required
+              onChange={onChangePassword}
+            />
+          </div>
+          <div>
+            <label htmlFor="user-password-check">Password Check</label>
+            <br />
+            <Input
+              name="user-password-check"
+              type="password"
+              value={passwordCheck}
+              required
+              onChange={onChangePasswordCheck}
+            />
+            {passwordError && <ErrorMessage>Password Check is not same with password!</ErrorMessage>}
+          </div>
+          <div>
+            <Checkbox name="user-term" checked={term} onChange={onChangeTerm}>
+              Should follow Regulation
+            </Checkbox>
+            {termError && <ErrorMessage>Please, Agree with Term!</ErrorMessage>}
+          </div>
+          <div style={{ marginTop: 10}}>
+              <Button type="primary" htmlType="submit" loading={signupLoading}>가입하기</Button>
+          </div>
+        </Form>
+      </AppLayout>
     );
 }
 

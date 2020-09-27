@@ -2,8 +2,9 @@ import React, {useState, useCallback, useMemo} from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
-import {useDispatch, useSelector, useInput} from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 import {loginRequestAction} from '../reducers/user';
+import useInput from '../hooks/useInput'
 
 const ButtonWraaper = styled.div `
     margin-top: 10px;

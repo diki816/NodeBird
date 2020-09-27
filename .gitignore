@@ -2,3 +2,5 @@
 node_modules/
 package-lock.json
 prepare/front/package-lock.json
+debug.log
+.gitignore
