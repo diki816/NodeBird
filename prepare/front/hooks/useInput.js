@@ -6,6 +6,6 @@ export default (initialValue = null) => {
         setter(e.target.value);
     }, []);
     
-    return [value, handler, setValue];
+    return [value, handler, setter];
 };
 

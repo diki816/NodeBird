@@ -69,7 +69,7 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label htmlFor="user-nick">nicknmae</label>
+            <label htmlFor="user-nick">nickname</label>
             <br />
             <Input
               name="user-nick"

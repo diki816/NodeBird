@@ -16,17 +16,19 @@ const LoginForm = () => {
     const dispatch = useDispatch();
     //const { isLoggingIn } = useSelector((state) => state.user)
     const { logInLoading } = useSelector((state) => state.user)
-    const [id, setId] = useInput('');
-    const [password, setPassword] = useInput('');
+    const [email, onChangeEmail] = useInput("");
+    const [password, onChangePassword] = useInput("");
 
-    const onChangeId = useCallback( (e) => {
-        setId(e.target.value);
+/*     
+    const onChangeEmail = useCallback((e) => {
+      setId(e.target.value);
     }, []);
-
+ */
+/*     
     const onChangePassword = useCallback( (e) => {
         setPassword(e.target.value);
     }, []);
-
+ */
     const onSubmitForm = useCallback( () => {
         console.log(email, password);
         //setIsLoggedIn(true);

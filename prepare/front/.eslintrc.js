@@ -29,5 +29,6 @@ module.exports = {
         "react/jsx-one-expression-per-line": "off",
         "object-curly-newline": "off",
         "linebreak-style": "off",
+        "no-param-reassign": "off", //immer 
     }
 };

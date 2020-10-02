@@ -18,7 +18,7 @@ const CardWrapper = styled.div`
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
 
-  const { removePostLoading } = useSelector((state) => stat.post);
+  const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const me = useSelector((state) => state.user);
   const id = me && me.id; // me?.id

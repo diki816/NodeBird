@@ -1,8 +1,8 @@
 import { all, fork, call, takeLatest, put } from 'redux-saga/effects';
 import { ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE
     , ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE
-    , REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_SUCCESS} from '../reducers/post'
-import { ADD_POST_TO_ME, REMOVE_POST_FROM_ME } from './user';
+    , REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE} from '../reducers/post'
+import { ADD_POST_TO_ME, REMOVE_POST_FROM_ME } from '../reducers/user';
 import shortId from 'shortid';
 
 
