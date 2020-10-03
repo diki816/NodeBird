@@ -37,7 +37,7 @@ function* addPost(action) {
     } catch (err) {
         yield put({
             type: ADD_POST_FAILURE,
-            data: err.response.data,
+            data: err.response,
         });
     }
 }

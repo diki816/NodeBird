@@ -1,14 +1,20 @@
-import React, {useState, useCallback, useMemo} from 'react';
+import React, { useCallback } from 'react';
 import { Form, Input, Button } from 'antd';
 import Link from 'next/link';
 import styled from 'styled-components';
-import {useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {loginRequestAction} from '../reducers/user';
 import useInput from '../hooks/useInput'
+import { LOG_IN_REQUEST } from '../reducers/user';
 
 const ButtonWraaper = styled.div `
     margin-top: 10px;
 `;
+
+const FormWrapper = styled(Form) `
+    padding: 10px;
+`;
+
 //redux 적용
 //const LoginForm = ( {setIsLoggedIn} ) => {
 const LoginForm = () => {
@@ -32,14 +38,15 @@ const LoginForm = () => {
     const onSubmitForm = useCallback( () => {
         console.log(email, password);
         //setIsLoggedIn(true);
-        dispatch(loginRequestAction({email, password}));
-    }, [email, password])
-    {/* anothet for preventing object refreshing using 'useMemo()'*/}
-    const style = useMemo(() => ({ marginTop: 10}), []);
+        //dispatch(loginRequestAction({email, password}));
+        dispatch({
+            type: LOG_IN_REQUEST,
+            data: { email, password },
+        });
+    }, [email, password]);
 
-    const FormWrapper = styled(Form) `
-        padding: 10px;
-    `;
+    {/* anothet for preventing object refreshing using 'useMemo()'*/}
+    //const style = useMemo(() => ({ marginTop: 10}), []);
 
     return (
         <FormWrapper onFinish={onSubmitForm}>
