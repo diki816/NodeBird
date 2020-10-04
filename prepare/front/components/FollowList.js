@@ -7,4 +7,4 @@ const FollowList = () => {
     };
 }
 
-export default FollowList;``
+export default FollowList;

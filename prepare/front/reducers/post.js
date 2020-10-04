@@ -1,4 +1,4 @@
-import shortid from "shortid";
+import shortId from "shortid";
 import faker from 'faker';
 
 import produce from '../util/produce';
@@ -22,9 +22,9 @@ export const initialState = {
 };
 
 export const generateDummyPost = (number) => Array(number).fill().map(() => ({
-  id: shortid.generate(),
+  id: shortId.generate(),
   User: {
-    id: shortid.generate(),
+    id: shortId.generate(),
     nickname: faker.name.findName(),
   },
   content: faker.lorem.paragraph(),
@@ -33,7 +33,7 @@ export const generateDummyPost = (number) => Array(number).fill().map(() => ({
   }],
   Comments: [{
     User: {
-      id: shortid.generate(),
+      id: shortId.generate(),
       nickname: faker.name.findName(),
     },
     content: faker.lorem.paragraph(),
@@ -69,16 +69,17 @@ export const addComment = (data) => ({
     data,
 });
 
-const dummyPost = {
-    id: 2,
-    content: 'dumy dumdum',
+const dummyPost = (data) => ({
+    id: data.id,
+    content: data.content,
     User: {
         id: 1,
         nickname: 'zerocho',
     },
     Images: [],
     Comments: [],
-};
+});
+
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
     case LOAD_POSTS_REQUEST:

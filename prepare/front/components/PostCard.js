@@ -33,7 +33,7 @@ const PostCard = ({ post }) => {
   }, []);
 
   const onRemovePost = useCallback(() => {
-    dispatchEvent({
+    dispatch({
       type: REMOVE_POST_REQUEST,
       data: post.id,
     })
@@ -63,7 +63,7 @@ const PostCard = ({ post }) => {
                 {id && post.User.id === id ? (
                   <>
                     <Button>Update</Button>
-                    <Button type="danger" onClick="onRemovePost" loading={removePostLoading}>Delete</Button>
+                    <Button type="danger" onClick={onRemovePost} loading={removePostLoading}>Delete</Button>
                   </>
                 ) : (
                   <Button>Report</Button>
@@ -75,7 +75,7 @@ const PostCard = ({ post }) => {
           </Popover>,
         ]}
 
-        extra={<FollowButton post={post} />}
+        extra={id && post.User.id === id ? (<FollowButton post={post}  />) : (<></>)}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
@@ -110,7 +110,7 @@ const PostCard = ({ post }) => {
   );
 };
 
-PostCard.propTypes = {
+PostCard.PropTypes = {
     post: PropTypes.shape({
         id: PropTypes.number,
         User: PropTypes.object,

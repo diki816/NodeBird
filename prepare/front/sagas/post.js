@@ -1,10 +1,14 @@
-import { all, fork, call, takeLatest, put } from 'redux-saga/effects';
+import { all, fork, call, takeLatest, put, throttle, delay } from 'redux-saga/effects';
 import { ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE
+    , LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE
     , ADD_COMMENT_REQUEST, ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE
-    , REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE} from '../reducers/post'
+    , REMOVE_POST_REQUEST, REMOVE_POST_SUCCESS, REMOVE_POST_FAILURE, generateDummyPost} from '../reducers/post'
 import { ADD_POST_TO_ME, REMOVE_POST_FROM_ME } from '../reducers/user';
 import shortId from 'shortid';
 
+function loadPostsAPI() {
+    return axios.get('/api/post', data)
+}
 
 function addPostAPI() {
     return axios.post('/api/post', data)
@@ -18,11 +22,28 @@ function addCommentAPI() {
     return axios.post('/api/post/${data.postId}/comment', data)
 }
 
+function* loadPosts(action) {
+    try {
+        //const result = yield call(addPostAPI, action.data);
+        yield delay(1000);
+        yield put({
+            type: LOAD_POSTS_SUCCESS,
+            data: generateDummyPost(10),
+        });
+    } catch (err) {
+        console.log(err);
+        yield put({
+            type: LOAD_POSTS_FAILURE,
+            data: err.response.data,
+        });
+    }
+}
+
 function* addPost(action) {
     try {
         //const result = yield call(addPostAPI, action.data);
         yield delay(1000);
-        const id = shortId.getnerate()
+        const id = shortId.generate()
         yield put({
             type: ADD_POST_SUCCESS,
             data: { 
@@ -35,6 +56,7 @@ function* addPost(action) {
             data: id,
         })
     } catch (err) {
+        console.log(err);
         yield put({
             type: ADD_POST_FAILURE,
             data: err.response,
@@ -58,7 +80,7 @@ function* removePost(action) {
         console.log(err);
         yield put({
             type: REMOVE_POST_FAILURE,
-            data: err.response.data,
+            data: err.response,
         });
     }
 }
@@ -73,13 +95,19 @@ function* addComment(action) {
     } catch (err) {
         yield put({
             type: ADD_COMMENT_FAILURE,
-            data: err.response.data,
+            data: err.response,
         });
     }
 }
 
+function* watchLoadPosts() {
+    //throttle : prevent too many call, ignore event during 5 sec.
+    //but it doesn't remove event. so call twice.
+    yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts);
+}
+
 function* watchAddPost() {
-    yield takeLatest(ADD_POST_REQUEST,addPost);
+    yield takeLatest(ADD_POST_REQUEST, addPost);
 }
 
 function* watchRemovePost() {
@@ -92,6 +120,7 @@ function* watchAddComment() {
 
 export default function* postSaga() {
     yield all([
+        fork(watchLoadPosts),
         fork(watchAddPost),
         fork(watchRemovePost),
         fork(watchAddComment),
