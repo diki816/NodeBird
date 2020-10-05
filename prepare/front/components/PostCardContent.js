@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 const PostCardContent = ({ postData }) => (
   <div>
-    console.log( postData );
     {postData.split(/(#[^\s#]+)/g).map((v) => {
       if (v.match(/(#[^\s#]+)/)) {
         return (
