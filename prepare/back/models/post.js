@@ -1,5 +1,5 @@
-models.exports = (sequelize, DataTypes) => {
-  const Post = sequelize.define('User', { //mysql에 users 테이블 생성
+module.exports = (sequelize, DataTypes) => {
+  const Post = sequelize.define('Post', { //mysql에 users 테이블 생성
     //id는 기본 생성
     content: {
       type: DataTypes.TEXT,
@@ -17,7 +17,7 @@ models.exports = (sequelize, DataTypes) => {
     db.Post.hasMany(db.Comment);
     db.Post.hasMany(db.Image);
     db.Post.belongsTo(db.Post, { as: 'Retweet' });
-    db.Post.belongsToMany(db.Hashtag);
+    db.Post.belongsToMany(db.Hashtag, {through: 'PostHashtag'});
     db.User.belongsToMany(db.User, { through: 'Like', as: 'Likers' })
   };
   return Post;

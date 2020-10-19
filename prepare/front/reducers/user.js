@@ -119,7 +119,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) =>{
       break;
 
     case SIGN_UP_REQUEST:
-      console.log("reducer logIN");
+      console.log("reducer signUp");
       draft.signUpLoading = true;
       draft.signUpDone = false;
       draft.signUpError = null;

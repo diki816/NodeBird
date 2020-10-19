@@ -14,8 +14,8 @@ function logOutAPI() {
     return axios.post('/api/logout')
 }
 
-function signUpAPI() {
-    return axios.post('/api/signUp')
+function signUpAPI(data) {
+    return axios.post('http://localhost:3065/user', data);
 }
 
 function followAPI() {
@@ -65,7 +65,8 @@ function* signUp(action) {
         console.log('saga signUp');
         //yield를 사용하면 테스트가용이 i.next()시 다음 yield전까지 실행
         //const result = yield call(logInAPI, action.data);
-        yield delay(1000);
+        const result = yield call(signUpAPI, action.data);
+        console.log(result);
         yield put({
             type: SIGN_UP_SUCCESS,
             data: action.data,

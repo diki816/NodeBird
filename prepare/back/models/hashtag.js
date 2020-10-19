@@ -1,5 +1,5 @@
-models.exports = (sequelize, DataTypes) => {
-  const Hashtag = sequelize.define('User', { //mysql에 users 테이블 생성
+module.exports = (sequelize, DataTypes) => {
+  const Hashtag = sequelize.define('Hashtag', { //mysql에 users 테이블 생성
     //id는 기본 생성
     name: {
       type: DataTypes.STRING(20),
@@ -12,7 +12,7 @@ models.exports = (sequelize, DataTypes) => {
   });
 
   Hashtag.associate = (db) => {
-    db.Hashtag.belongsToMany(db.Post);
+    db.Hashtag.belongsToMany(db.Post, {through: 'PostHashtag`'});
   };
   return Hashtag;
 }

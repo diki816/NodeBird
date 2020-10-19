@@ -1,5 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState,useEffect } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import { Form, Input, Checkbox, Button } from 'antd';
 import styled from 'styled-components';
 
@@ -8,11 +9,26 @@ import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
 import { useSelector, useDispatch } from 'react-redux';
 import { SIGN_UP_REQUEST } from '../reducers/user';
+const ErrorMessage = styled.div`
+  color: red;
+`;
 
 const Signup = () => {
 
     const dispatch = useDispatch();
-    const { signupLoading } = useSelector((state) => state.user);
+    const { signupLoading, signUpDone, signUpError } = useSelector((state) => state.user);
+
+    useEffect( () => {
+      if(signUpDone) {
+        Router.push('/');
+      }
+    }, [signUpDone]);
+
+    useEffect( () => {
+      if(signUpError) {
+        alert(signUpError);
+      }
+    }, [signUpError]);
 
     const [email, onChangeEmail] = useInput('');
     const [nickname, onChangeNickname] = useInput('');
@@ -21,7 +37,7 @@ const Signup = () => {
     const [passwordCheck, setPasswordCheck] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    const onChangePassword = useCallback( (e) => {
+    const onChangePasswordCheck = useCallback( (e) => {
             setPasswordCheck(e.target.value);
             setPasswordError(e.target.value !== password);
     }, [password] );
@@ -30,7 +46,7 @@ const Signup = () => {
     const [termError, setTermError] = useState('');
 
     const onChangeTerm = useCallback((e) => {
-            setTerm(e.target.value);
+            setTerm(e.target.checked);
             setTermError(false);
     }, []);
 
@@ -43,13 +59,13 @@ const Signup = () => {
             return setTermError(true);
         }
 
-        console.log(id, nickname, password);
+        //  console.log(id, nickname, password);
 
         dispatch( {
             type: SIGN_UP_REQUEST,
             data: { email, password, nickname },
         })
-    }, [meail, password, passowrdCheck, term]);
+    }, [email, password, passwordCheck, term]);
 
     return (
       <AppLayout>

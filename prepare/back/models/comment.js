@@ -1,5 +1,5 @@
-models.exports = (sequelize, DataTypes) => {
-  const Comment = sequelize.define('User', { //mysql에 users 테이블 생성
+module.exports = (sequelize, DataTypes) => {
+  const Comment = sequelize.define('Comment', { //mysql에 users 테이블 생성
     //id는 기본 생성
     content: {      
       type: DataTypes.TEXT,
