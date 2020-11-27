@@ -29,7 +29,7 @@ const FollowButton = ({ post }) => {
   );
 }
 
-FollowButton.PropTypes = {
+FollowButton.propTypes = {
   post: PropTypes.object.isRequired,
 };
 

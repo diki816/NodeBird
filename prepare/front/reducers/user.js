@@ -1,4 +1,4 @@
-import produce from "immer";
+import produce from '../util/produce';
 
 const initialState = {
     logInLoading: false,
@@ -81,6 +81,8 @@ export const logoutRequestAction = () => {
 };
 
 const reducer = (state = initialState, action) => produce(state, (draft) =>{
+  console.log('test', action.type);
+  console.log('reducer started ...');
   switch (action.type) {
     case LOG_IN_REQUEST:
       console.log("reducer logIN");
@@ -119,6 +121,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) =>{
       break;
 
     case SIGN_UP_REQUEST:
+      console.log(action.data.nickname);
       console.log("reducer signUp");
       draft.signUpLoading = true;
       draft.signUpDone = false;
@@ -176,7 +179,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) =>{
 
     case UNFOLLOW_SUCCESS:
       draft.unfollowLoading = false;
-      draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data);
+      draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data.UserId);
       draft.unfollowDone = true;
       break;
 

@@ -1,8 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const passport = require('../passport');
 
 const { User } = require('../models');
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if(err) {
+      console.log(err);
+      return next(err);
+    }
+    if(info) {
+      return res.status(401).send(info.reason);
+    }
+  })(req, res, next);
+});
 
 router.post('/', async (req, res, next) => { //POST /user
   try {
@@ -21,11 +34,11 @@ router.post('/', async (req, res, next) => { //POST /user
       nickname: req.body.nickname,
       password: hashedPassword,
     });
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    //res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000/');
     res.status(200).send('ok');
   } catch(error) {
     console.error(error);
-    next(error);
+    next(error); //status 500
   }
 });
 
